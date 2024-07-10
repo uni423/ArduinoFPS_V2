@@ -1,0 +1,6 @@
+﻿Unit_ID,#design,Unit_Type,Unit_Model,Unit_Hp,Unit_Move,Unit_Point,Unit_Param1,Unit_Param2
+201,일반 토끼,Rabbit_Normal,Rabbit_Normal,10,5,2,0,0
+202,아기 토끼,Rabbit_Baby,Rabbit_Baby,10,7,3,0,0
+203,강화 토끼,Rabbit_Strong,Rabbit_Strong,10,5,5,5,0
+204,진화 토끼,Rabbit_Evolve,Rabbit_Evolve,10,3,8,0,0
+205,벌크업 토끼,Rabbit_BulkUp,Rabbit_BulkUp,120,3,12,5,0
