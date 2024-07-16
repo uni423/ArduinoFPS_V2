@@ -6,6 +6,8 @@ using UnityEngine;
 public delegate void OnRefreshUI();
 public enum UIState
 {
+    _PC_Main_PlayerConnect,
+    _PC_Main_StageSelect, 
     _InGameUI,
     _ResultUI, 
 }
