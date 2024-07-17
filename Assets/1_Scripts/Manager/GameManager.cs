@@ -17,8 +17,9 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         StartCoroutineMethod(TableBase.LoadAllDataTable());
-
-        //bluetoothManager.Init();
+#if !UNITY_EDITOR
+        bluetoothManager.Init();
+#endif
 
         Initialize();
 
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
         UserInfoData.SaveData();
     }
 
-    #region Coroutine
+#region Coroutine
     public static Coroutine StartCoroutineMethod(IEnumerator enumerator)
     {
         return Instance.StartCoroutine(enumerator);
@@ -47,5 +48,5 @@ public class GameManager : MonoBehaviour
     {
         Instance.StopAllCoroutines();
     }
-    #endregion
+#endregion
 }
