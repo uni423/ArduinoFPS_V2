@@ -54,6 +54,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7505b6c1e55ab974eb4aa5d537ca3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RoomNameText: {fileID: 8597726505602191590}
+  Player1: {fileID: 9117632558945529555}
+  Player2: {fileID: 7154605035822725801}
 --- !u!223 &89391350717312130
 Canvas:
   m_ObjectHideFlags: 0

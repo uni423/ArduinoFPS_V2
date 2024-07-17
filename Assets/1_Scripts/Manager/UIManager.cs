@@ -7,10 +7,13 @@ public delegate void OnRefreshUI();
 public enum UIState
 {
     _PC_Main_PlayerConnect,
-    _PC_Main_StageSelect, 
+    _PC_Main_StageSelect,
+    _Mobile_Main_PlaySelect, 
+    _Mobile_Main_RoomSelect,
     _InGameUI,
     _ResultUI, 
 }
+
 public class UIManager : MonoBehaviour
 {
     private static UIManager m_instance;
@@ -27,6 +30,8 @@ public class UIManager : MonoBehaviour
         }
     }
     public UIState curState { private set; get; }
+    public GameObject PCUIObj;
+    public GameObject MobileUIObj;
     public List<UIBase> uiDataLists;
 
     public event OnRefreshUI onRefreshUserInfoUI;
@@ -34,6 +39,9 @@ public class UIManager : MonoBehaviour
 
     public void Init()
     {
+        PCUIObj.SetActive(Utility.IsPCPlatform());
+        MobileUIObj.SetActive(Utility.IsMobilePlatform());
+
         for (int i = 0; i < uiDataLists.Count; i++)
         {
             if (uiDataLists[i] != null)

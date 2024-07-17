@@ -18,4 +18,17 @@ public static class Utility
         return arrWord;
     }
 
+    public static bool IsMobilePlatform()
+    {
+        return Application.isMobilePlatform;
+    }
+
+    public static bool IsPCPlatform()
+    {
+#if UNITY_EDITOR
+        return true;
+#else
+        return Application.platform == RuntimePlatform.WindowsPlayer;
+#endif
+    }
 }
