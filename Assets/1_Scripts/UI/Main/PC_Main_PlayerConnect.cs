@@ -28,15 +28,15 @@ public class PC_Main_PlayerConnect : UIBase
     {
         switch(playerCount)
         {
-            case 0:
+            case 1:
                 if (Player1.activeSelf == true) Player1.SetActive(false);
                 if (Player2.activeSelf == true) Player2.SetActive(false);
                 break;
-            case 1:
+            case 2:
                 if (Player1.activeSelf == false) Player1.SetActive(true);
                 if (Player2.activeSelf == true) Player2.SetActive(false);
                 break;
-            case 2:
+            case 3:
                 if (Player1.activeSelf == false) Player1.SetActive(true);
                 if (Player2.activeSelf == false) Player2.SetActive(true);
                 break;
@@ -46,7 +46,7 @@ public class PC_Main_PlayerConnect : UIBase
     public void OnClick_TestStart()
     {
         GameManager.Instance.ChangeGameStep(GameStep.PC_Main_StageSelect);
-        UIManager.Instance.HideUI(UIState._PC_Main_PlayerConnect);
+        UIManager.Instance.HideUI(UIState._Main_PlayerConnect);
         UIManager.Instance.ShowUI(UIState._Main_StageSelect);
     }
 }

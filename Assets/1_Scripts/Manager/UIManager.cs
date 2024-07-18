@@ -6,10 +6,10 @@ using UnityEngine;
 public delegate void OnRefreshUI();
 public enum UIState
 {
-    _PC_Main_PlayerConnect,
     _Mobile_Main_PlaySelect,
     _Mobile_Main_RoomSelect,
     _Mobile_Main_WaitPlayerConnet, 
+    _Main_PlayerConnect,
     _Main_StageSelect,
     _InGameUI,
     _ResultUI, 

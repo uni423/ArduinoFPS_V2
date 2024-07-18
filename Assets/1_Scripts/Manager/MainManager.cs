@@ -51,6 +51,12 @@ public class MainManager : MonoBehaviourPunCallbacks
 
         if (GameManager.Instance.platform == PlatformType.PC)
             CreateRoom();
+        else if (GameManager.Instance.platform == PlatformType.Mobile)
+        {
+            GameManager.Instance.ChangeGameStep(GameStep.Mobile_Main_RoomSelect);
+            UIManager.Instance.HideUI(UIState._Mobile_Main_PlaySelect);
+            UIManager.Instance.ShowUI(UIState._Mobile_Main_RoomSelect);
+        }
 
         //PhotonNetwork.LoadLevel("LobbyScene");
     }
@@ -64,7 +70,7 @@ public class MainManager : MonoBehaviourPunCallbacks
         if (playerCount >= 3)
         {
             GameManager.Instance.ChangeGameStep(GameStep.PC_Main_StageSelect);
-            UIManager.Instance.HideUI(UIState._PC_Main_PlayerConnect);
+            UIManager.Instance.HideUI(UIState._Main_PlayerConnect);
             UIManager.Instance.ShowUI(UIState._Main_StageSelect);
         }
     }
@@ -79,7 +85,7 @@ public class MainManager : MonoBehaviourPunCallbacks
         {
             GameManager.Instance.ChangeGameStep(GameStep.PC_Main_WaitPlayerConnet);
             UIManager.Instance.HideUI(UIState._Main_StageSelect);
-            UIManager.Instance.ShowUI(UIState._PC_Main_PlayerConnect);
+            UIManager.Instance.ShowUI(UIState._Main_PlayerConnect);
         }
     }
 
@@ -108,7 +114,22 @@ public class MainManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom("Room101", roomOptions);
 
         GameManager.Instance.ChangeGameStep(GameStep.PC_Main_WaitPlayerConnet);
-        UIManager.Instance.ShowUI(UIState._PC_Main_PlayerConnect);
+        UIManager.Instance.ShowUI(UIState._Main_PlayerConnect);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        base.OnCreatedRoom();
+        Debug.LogError("Room Created");
+        (UIManager.Instance.GetUI(UIState._Main_PlayerConnect) as PC_Main_PlayerConnect).SetRoomName(PhotonNetwork.CurrentRoom.Name);
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        base.OnCreateRoomFailed(returnCode, message);
+        Debug.LogError("Room Created Fail");
+        UIManager.Instance.ShowUI(UIState._ErrorPage);
+        (UIManager.Instance.GetUI(UIState._ErrorPage) as ErrorPage).text.text = "Room Created Fail \"" + returnCode + "\"" + message + "\"";
     }
 
     public void ChangePlayerCount()
@@ -119,7 +140,7 @@ public class MainManager : MonoBehaviourPunCallbacks
 
         playerCount = PhotonNetwork.PlayerList.Length;
 
-        (UIManager.Instance.GetUI(UIState._PC_Main_PlayerConnect) as PC_Main_PlayerConnect).ChangePlayerState(playerCount);
+        (UIManager.Instance.GetUI(UIState._Main_PlayerConnect) as PC_Main_PlayerConnect).ChangePlayerState(playerCount);
     }
 
     #endregion
@@ -138,19 +159,30 @@ public class MainManager : MonoBehaviourPunCallbacks
         else
         {
             GameManager.Instance.gamePlayType = GamePlayerType.Multi;
-            GameManager.Instance.ChangeGameStep(GameStep.Mobile_Main_RoomSelect);
-            UIManager.Instance.HideUI(UIState._Mobile_Main_PlaySelect);
-            UIManager.Instance.ShowUI(UIState._Mobile_Main_RoomSelect);
+
+            ConnetToMaster();
         }
     }
 
     public void JoinRoom(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+
+        GameManager.Instance.ChangeGameStep(GameStep.Mobile_Main_WaitPlayerConnet);
+        UIManager.Instance.HideUI(UIState._Mobile_Main_RoomSelect);
+        UIManager.Instance.ShowUI(UIState._Main_PlayerConnect);
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        base.OnJoinRoomFailed(returnCode, message);
         UIManager.Instance.ShowUI(UIState._ErrorPage);
-        (UIManager.Instance.GetUI(UIState._ErrorPage) as ErrorPage).text.text = "JoinRoom to \"" + roomName + "\"";
-        //error.text = "JoinRoom to \"" + roomName + "\"";
-        Debug.LogError("JoinRoom to \"" + roomName + "\"");
+        (UIManager.Instance.GetUI(UIState._ErrorPage) as ErrorPage).text.text = "Join Room Failed \"" + returnCode + "\"" + message + "\"";
     }
     #endregion
 }

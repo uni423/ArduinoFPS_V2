@@ -20,14 +20,18 @@ public class GameManager : MonoBehaviour
 
         StartCoroutineMethod(TableBase.LoadAllDataTable());
 
-#if !UNITY_EDITOR
-        bluetoothManager.Init();
-#endif
-
         if (Utility.IsPCPlatform())
             platform = PlatformType.PC;
         else if (Utility.IsMobilePlatform())
             platform = PlatformType.Mobile;
+#if UNITY_EDITOR
+        platform = PlatformType.PC;
+#endif
+
+#if !UNITY_EDITOR
+        if (platform == PlatformType.Mobile)
+            bluetoothManager.Init();
+#endif
 
         Initialize();
 
