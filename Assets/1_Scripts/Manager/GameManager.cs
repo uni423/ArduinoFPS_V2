@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public GameStep gameStep;
     public PlatformType platform;
+    public GamePlayerType gamePlayType;
 
     protected void Awake()
     {
@@ -38,6 +39,15 @@ public class GameManager : MonoBehaviour
         UserInfoData = new UserInfoData();
         UserInfoData.InitData();
         UserInfoData.SaveData();
+    }
+
+    public void ChangeGameStep(GameStep changeStep)
+    {
+        if (gameStep != changeStep)
+        {
+            Debug.Log("Game Step Change : " + gameStep + " -> " + changeStep);
+            gameStep = changeStep;
+        }
     }
 
     #region Coroutine

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Mobile_Main_PlaySelect : UIBase
+public class ErrorPage : UIBase
 {
+    public Text text;
 }

@@ -6,8 +6,6 @@ public class PC_Main_StageSelect : UIBase
 {
     public void OnClick_Stage(int index)
     {
-        GameManager.Instance.UserInfoData.SetData(UserDataField.SelectedStage, index);
-
-        //SceneLoader.Load("GameScene");
+        MainManager.Instance.SelectStage(index);
     }
 }

@@ -52,7 +52,7 @@ public class InGameManager : MonoBehaviour
 
     public static void DoGameStart()
     {
-        GameManager.Instance.gameStep = GameStep.Playing;
+        GameManager.Instance.ChangeGameStep(GameStep.Playing);
 
         IsPlaying = true;
         IsReSetting = false;

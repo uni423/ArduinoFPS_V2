@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7614830441813997545}
   - component: {fileID: 7614830441813997540}
+  - component: {fileID: 1507314093943299098}
   - component: {fileID: 7614830441813997543}
   - component: {fileID: 7614830441813997542}
   m_Layer: 5
-  m_Name: Room Item
+  m_Name: Mobile_Main_RoomSelect_RoomItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +38,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 869.9, y: 116.77}
+  m_SizeDelta: {x: 870, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7614830441813997540
 CanvasRenderer:
@@ -47,6 +48,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7614830441813997544}
   m_CullTransparentMesh: 1
+--- !u!114 &1507314093943299098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614830441813997544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83108c1b0222ba54c84634ae9765eb87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomInfo: {fileID: 7614830442618782785}
 --- !u!114 &7614830441813997543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +134,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7614830441813997543}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1507314093943299098}
+        m_TargetAssemblyTypeName: Mobile_Main_RoomSelect_RoomItem, Assembly-CSharp
+        m_MethodName: OnClick_RoomJoin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7614830442618782787
 GameObject:
   m_ObjectHideFlags: 0

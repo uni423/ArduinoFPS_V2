@@ -7,11 +7,13 @@ public delegate void OnRefreshUI();
 public enum UIState
 {
     _PC_Main_PlayerConnect,
-    _PC_Main_StageSelect,
-    _Mobile_Main_PlaySelect, 
+    _Mobile_Main_PlaySelect,
     _Mobile_Main_RoomSelect,
+    _Mobile_Main_WaitPlayerConnet, 
+    _Main_StageSelect,
     _InGameUI,
     _ResultUI, 
+    _ErrorPage, 
 }
 
 public class UIManager : MonoBehaviour
