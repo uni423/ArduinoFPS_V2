@@ -8,6 +8,6 @@ public class PC_Main_StageSelect : UIBase
     {
         GameManager.Instance.UserInfoData.SetData(UserDataField.SelectedStage, index);
 
-        SceneLoader.Load("GameScene");
+        //SceneLoader.Load("GameScene");
     }
 }

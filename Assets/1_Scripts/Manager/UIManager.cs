@@ -39,8 +39,8 @@ public class UIManager : MonoBehaviour
 
     public void Init()
     {
-        PCUIObj.SetActive(Utility.IsPCPlatform());
-        MobileUIObj.SetActive(Utility.IsMobilePlatform());
+        PCUIObj.SetActive(GameManager.Instance.platform == PlatformType.PC);
+        MobileUIObj.SetActive(GameManager.Instance.platform == PlatformType.Mobile);
 
         for (int i = 0; i < uiDataLists.Count; i++)
         {

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public UserInfoData UserInfoData;
 
     public GameStep gameStep;
+    public PlatformType platform;
 
     protected void Awake()
     {
@@ -21,6 +22,11 @@ public class GameManager : MonoBehaviour
 #if !UNITY_EDITOR
         bluetoothManager.Init();
 #endif
+
+        if (Utility.IsPCPlatform())
+            platform = PlatformType.PC;
+        else if (Utility.IsMobilePlatform())
+            platform = PlatformType.Mobile;
 
         Initialize();
 

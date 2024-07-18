@@ -17,3 +17,9 @@ public enum AttackType
     Normal, 
 
 }
+
+public enum PlatformType
+{
+    PC, 
+    Mobile, 
+}
