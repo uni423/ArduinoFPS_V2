@@ -11,12 +11,17 @@ public enum GameStep
 {
     Loading, 
     Main, 
-    PC_Main_WaitPlayerConnet, 
-    PC_Main_StageSelect, 
+
     Mobile_Main_PlaySelect, 
-    Mobile_Main_StageSelect, 
     Mobile_Main_RoomSelect, 
+    
     Mobile_Main_WaitPlayerConnet, 
+    PC_Main_WaitPlayerConnet, 
+    
+    PC_Main_StageSelect, 
+    Mobile_Main_WaitStageSelect, 
+    Mobile_Main_StageSelect, 
+
     Playing, 
     End, 
     Continue, 

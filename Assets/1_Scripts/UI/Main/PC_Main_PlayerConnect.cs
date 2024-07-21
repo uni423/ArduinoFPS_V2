@@ -10,6 +10,18 @@ public class PC_Main_PlayerConnect : UIBase
     public GameObject Player1;
     public GameObject Player2;
 
+    public GameObject Mobile_WaitStageSelect;
+
+    public override void Init()
+    {
+        base.Init();
+
+        RoomNameText.text = "Room Name : ";
+        Player1.SetActive(false);
+        Player2.SetActive(false);
+        Mobile_WaitStageSelect.SetActive(false);
+    }
+
     public override void ShowUI()
     {
         base.ShowUI();
@@ -17,6 +29,7 @@ public class PC_Main_PlayerConnect : UIBase
         RoomNameText.text = "Room Name : ";
         Player1.SetActive(false);
         Player2.SetActive(false);
+        Mobile_WaitStageSelect.SetActive(false);
     }
 
     public void SetRoomName(string Name)
@@ -26,7 +39,7 @@ public class PC_Main_PlayerConnect : UIBase
 
     public void ChangePlayerState(int playerCount)
     {
-        switch(playerCount)
+        switch (playerCount)
         {
             case 1:
                 if (Player1.activeSelf == true) Player1.SetActive(false);
@@ -39,14 +52,16 @@ public class PC_Main_PlayerConnect : UIBase
             case 3:
                 if (Player1.activeSelf == false) Player1.SetActive(true);
                 if (Player2.activeSelf == false) Player2.SetActive(true);
+                if (GameManager.Instance.platform == PlatformType.Mobile && Mobile_WaitStageSelect.activeSelf == false)
+                    Mobile_WaitStageSelect.SetActive(true);
                 break;
         }
     }
 
     public void OnClick_TestStart()
     {
-        GameManager.Instance.ChangeGameStep(GameStep.PC_Main_StageSelect);
-        UIManager.Instance.HideUI(UIState._Main_PlayerConnect);
+        GameManager.Instance.ChangeGameStep(PlatformType.PC, GameStep.PC_Main_StageSelect);
+        UIManager.Instance.HideUI();
         UIManager.Instance.ShowUI(UIState._Main_StageSelect);
     }
 }

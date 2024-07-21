@@ -8,7 +8,6 @@ public enum UIState
 {
     _Mobile_Main_PlaySelect,
     _Mobile_Main_RoomSelect,
-    _Mobile_Main_WaitPlayerConnet, 
     _Main_PlayerConnect,
     _Main_StageSelect,
     _InGameUI,
@@ -38,7 +37,6 @@ public class UIManager : MonoBehaviour
 
     public event OnRefreshUI onRefreshUserInfoUI;
 
-
     public void Init()
     {
         PCUIObj.SetActive(GameManager.Instance.platform == PlatformType.PC);
@@ -65,11 +63,20 @@ public class UIManager : MonoBehaviour
             uiDataLists[(int)state].ShowUI();
         }
     }
+
+    public void HideUI()
+    {
+        UIState hideState = curState;
+        if (uiDataLists.Count >= (int)hideState && uiDataLists[(int)hideState] != null)
+            uiDataLists[(int)hideState].HideUI();
+    }
+    
     public void HideUI(UIState state)
     {
         if (uiDataLists.Count >= (int)state && uiDataLists[(int)state] != null)
             uiDataLists[(int)state].HideUI();
     }
+    
     public UIBase GetUI(UIState state)
     {
         return uiDataLists[(int)state];

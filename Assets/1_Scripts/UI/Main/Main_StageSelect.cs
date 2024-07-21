@@ -6,6 +6,6 @@ public class Main_StageSelect : UIBase
 {
     public void OnClick_Stage(int index)
     {
-        MainManager.Instance.SelectStage(index);
+        MainManager.Instance.photonEvent.On_SelectStageEvnet(index);
     }
 }

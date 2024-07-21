@@ -6,6 +6,8 @@ using Photon.Realtime;
 
 public class MainManager : MonoBehaviourPunCallbacks
 {
+    public PhotonEvent photonEvent;
+
     public static MainManager Instance;
     private readonly string gameVersion = "v1.0";
 
@@ -15,7 +17,7 @@ public class MainManager : MonoBehaviourPunCallbacks
     {
         Instance = this;
         UIManager.Instance.Init();
-        
+
         if (GameManager.Instance.platform == PlatformType.PC)
         {
             GameManager.Instance.gamePlayType = GamePlayerType.Multi;
@@ -23,7 +25,7 @@ public class MainManager : MonoBehaviourPunCallbacks
         }
         else if (GameManager.Instance.platform == PlatformType.Mobile)
         {
-            GameManager.Instance.ChangeGameStep(GameStep.Mobile_Main_PlaySelect);
+            GameManager.Instance.ChangeGameStep(PlatformType.Mobile, GameStep.Mobile_Main_PlaySelect);
             UIManager.Instance.ShowUI(UIState._Mobile_Main_PlaySelect);
         }
     }
@@ -53,8 +55,8 @@ public class MainManager : MonoBehaviourPunCallbacks
             CreateRoom();
         else if (GameManager.Instance.platform == PlatformType.Mobile)
         {
-            GameManager.Instance.ChangeGameStep(GameStep.Mobile_Main_RoomSelect);
-            UIManager.Instance.HideUI(UIState._Mobile_Main_PlaySelect);
+            GameManager.Instance.ChangeGameStep(PlatformType.Mobile, GameStep.Mobile_Main_RoomSelect);
+            UIManager.Instance.HideUI();
             UIManager.Instance.ShowUI(UIState._Mobile_Main_RoomSelect);
         }
 
@@ -69,9 +71,14 @@ public class MainManager : MonoBehaviourPunCallbacks
         //게임 스테이지 선택으로 이동
         if (playerCount >= 3)
         {
-            GameManager.Instance.ChangeGameStep(GameStep.PC_Main_StageSelect);
-            UIManager.Instance.HideUI(UIState._Main_PlayerConnect);
-            UIManager.Instance.ShowUI(UIState._Main_StageSelect);
+            GameManager.Instance.ChangeGameStep(PlatformType.PC, GameStep.PC_Main_StageSelect);
+            GameManager.Instance.ChangeGameStep(PlatformType.Mobile, GameStep.Mobile_Main_WaitStageSelect);
+
+            if (GameManager.Instance.platform == PlatformType.PC)
+            {
+                UIManager.Instance.HideUI();
+                UIManager.Instance.ShowUI(UIState._Main_StageSelect);
+            }
         }
     }
 
@@ -81,10 +88,13 @@ public class MainManager : MonoBehaviourPunCallbacks
         ChangePlayerCount();
 
         //두명 대기 중 인원이 변경되어 플레이어가 부족해질 경우
-        if (GameManager.Instance.gameStep == GameStep.PC_Main_StageSelect && playerCount < 3)
+        if ((GameManager.Instance.gameStep == GameStep.PC_Main_StageSelect || GameManager.Instance.gameStep == GameStep.Mobile_Main_WaitStageSelect) 
+            && playerCount < 3)
         {
-            GameManager.Instance.ChangeGameStep(GameStep.PC_Main_WaitPlayerConnet);
-            UIManager.Instance.HideUI(UIState._Main_StageSelect);
+            GameManager.Instance.ChangeGameStep(PlatformType.PC, GameStep.PC_Main_WaitPlayerConnet);
+            GameManager.Instance.ChangeGameStep(PlatformType.Mobile, GameStep.Mobile_Main_WaitPlayerConnet);
+
+            UIManager.Instance.HideUI();
             UIManager.Instance.ShowUI(UIState._Main_PlayerConnect);
         }
     }
@@ -93,8 +103,6 @@ public class MainManager : MonoBehaviourPunCallbacks
 
     public void SelectStage(int index)
     {
-        GameManager.Instance.UserInfoData.SetData(UserDataField.SelectedStage, index);
-        PhotonNetwork.LoadLevel("GameScene");
     }
 
     #endregion
@@ -113,7 +121,7 @@ public class MainManager : MonoBehaviourPunCallbacks
         //추후에 룸 고유 ID 생성되도록 수정
         PhotonNetwork.CreateRoom("Room101", roomOptions);
 
-        GameManager.Instance.ChangeGameStep(GameStep.PC_Main_WaitPlayerConnet);
+        GameManager.Instance.ChangeGameStep(PlatformType.PC, GameStep.PC_Main_WaitPlayerConnet);
         UIManager.Instance.ShowUI(UIState._Main_PlayerConnect);
     }
 
@@ -134,12 +142,10 @@ public class MainManager : MonoBehaviourPunCallbacks
 
     public void ChangePlayerCount()
     {
-        if (GameManager.Instance.platform != PlatformType.PC
-            || PhotonNetwork.PlayerList.Length == playerCount)
+        if (PhotonNetwork.PlayerList.Length == playerCount)
             return;
 
         playerCount = PhotonNetwork.PlayerList.Length;
-
         (UIManager.Instance.GetUI(UIState._Main_PlayerConnect) as PC_Main_PlayerConnect).ChangePlayerState(playerCount);
     }
 
@@ -152,8 +158,8 @@ public class MainManager : MonoBehaviourPunCallbacks
         if (isSelectSolo)
         {
             GameManager.Instance.gamePlayType = GamePlayerType.Solo;
-            GameManager.Instance.ChangeGameStep(GameStep.Mobile_Main_StageSelect);
-            UIManager.Instance.HideUI(UIState._Mobile_Main_PlaySelect);
+            GameManager.Instance.ChangeGameStep(PlatformType.Mobile, GameStep.Mobile_Main_StageSelect);
+            UIManager.Instance.HideUI();
             UIManager.Instance.ShowUI(UIState._Main_StageSelect);
         }
         else
@@ -173,9 +179,13 @@ public class MainManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
 
-        GameManager.Instance.ChangeGameStep(GameStep.Mobile_Main_WaitPlayerConnet);
-        UIManager.Instance.HideUI(UIState._Mobile_Main_RoomSelect);
-        UIManager.Instance.ShowUI(UIState._Main_PlayerConnect);
+        if (GameManager.Instance.platform == PlatformType.Mobile)
+        {
+            GameManager.Instance.ChangeGameStep(PlatformType.Mobile, GameStep.Mobile_Main_WaitPlayerConnet);
+            UIManager.Instance.HideUI();
+            UIManager.Instance.ShowUI(UIState._Main_PlayerConnect);
+            ChangePlayerCount();
+        }
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)

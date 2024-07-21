@@ -52,7 +52,7 @@ public class InGameManager : MonoBehaviour
 
     public static void DoGameStart()
     {
-        GameManager.Instance.ChangeGameStep(GameStep.Playing);
+        GameManager.Instance.ChangeGameStep(GameManager.Instance.platform, GameStep.Playing);
 
         IsPlaying = true;
         IsReSetting = false;
@@ -70,7 +70,7 @@ public class InGameManager : MonoBehaviour
         if (gameTime <= 0)
         {
             IsPlaying = false;
-            UIManager.Instance.HideUI(UIState._InGameUI);
+            UIManager.Instance.HideUI();
             UIManager.Instance.ShowUI(UIState._ResultUI);
             return;
         }

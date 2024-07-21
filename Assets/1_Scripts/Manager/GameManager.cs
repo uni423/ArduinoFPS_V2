@@ -45,9 +45,9 @@ public class GameManager : MonoBehaviour
         UserInfoData.SaveData();
     }
 
-    public void ChangeGameStep(GameStep changeStep)
+    public void ChangeGameStep(PlatformType targetPlatform, GameStep changeStep)
     {
-        if (gameStep != changeStep)
+        if (targetPlatform == platform && gameStep != changeStep)
         {
             Debug.Log("Game Step Change : " + gameStep + " -> " + changeStep);
             gameStep = changeStep;
@@ -69,5 +69,5 @@ public class GameManager : MonoBehaviour
     {
         Instance.StopAllCoroutines();
     }
-#endregion
+    #endregion
 }
