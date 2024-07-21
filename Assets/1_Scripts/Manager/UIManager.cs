@@ -11,8 +11,8 @@ public enum UIState
     _Main_PlayerConnect,
     _Main_StageSelect,
     _InGameUI,
-    _ResultUI, 
-    _ErrorPage, 
+    SoloGame_Result,
+    _ErrorPage,
 }
 
 public class UIManager : MonoBehaviour
@@ -39,8 +39,8 @@ public class UIManager : MonoBehaviour
 
     public void Init()
     {
-        PCUIObj.SetActive(GameManager.Instance.platform == PlatformType.PC);
-        MobileUIObj.SetActive(GameManager.Instance.platform == PlatformType.Mobile);
+        if (PCUIObj != null) PCUIObj.SetActive(GameManager.Instance.platform == PlatformType.PC);
+        if (MobileUIObj != null) MobileUIObj.SetActive(GameManager.Instance.platform == PlatformType.Mobile);
 
         for (int i = 0; i < uiDataLists.Count; i++)
         {
@@ -70,13 +70,13 @@ public class UIManager : MonoBehaviour
         if (uiDataLists.Count >= (int)hideState && uiDataLists[(int)hideState] != null)
             uiDataLists[(int)hideState].HideUI();
     }
-    
+
     public void HideUI(UIState state)
     {
         if (uiDataLists.Count >= (int)state && uiDataLists[(int)state] != null)
             uiDataLists[(int)state].HideUI();
     }
-    
+
     public UIBase GetUI(UIState state)
     {
         return uiDataLists[(int)state];

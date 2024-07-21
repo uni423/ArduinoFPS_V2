@@ -71,7 +71,7 @@ public class InGameManager : MonoBehaviour
         {
             IsPlaying = false;
             UIManager.Instance.HideUI();
-            UIManager.Instance.ShowUI(UIState._ResultUI);
+            UIManager.Instance.ShowUI(UIState.SoloGame_Result);
             return;
         }
 

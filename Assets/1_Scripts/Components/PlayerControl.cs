@@ -14,6 +14,11 @@ public class PlayerControl : MonoBehaviour
     public float comboTimeMax;
     public float comboTimeCur;
 
+    public bool isUsePump;
+    public float pumpValue;
+    public float pumpAddValue;
+    public IngameUI ingameUI;
+
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip[] reloadSFX;
@@ -39,6 +44,11 @@ public class PlayerControl : MonoBehaviour
         comboTimeMax = 5f;
         comboTimeCur = 0f;
         OnReload();
+
+        //InGameManager.IsPlaying = true;
+        //isUsePump = true;
+        isUsePump = !GameManager.Instance.bluetoothManager.IsConnected;
+        ingameUI = (UIManager.Instance.GetUI(UIState._InGameUI) as IngameUI);
     }
 
     void Update()
@@ -81,6 +91,28 @@ public class PlayerControl : MonoBehaviour
                 //콤보 종료
                 comboCount = 0;
                 comboTimeCur = 0f;
+            }
+        }
+
+        //컨트롤러 없을 때 펌프 사용
+        if (isUsePump)
+        {
+            pumpValue = ingameUI.pump.value;
+            if (pumpValue <= 100 && !isReload)
+            {
+                isReload = true;
+                OnReload();
+            }
+            if (pumpValue < ingameUI.pump.maxValue)
+            {
+                float max = ingameUI.pump.maxValue;
+                if (max > ingameUI.pump.maxValue) max = ingameUI.pump.maxValue;
+                pumpValue += Mathf.Lerp(0, max, Time.deltaTime * pumpAddValue);
+                ingameUI.pump.value = pumpValue;
+            }
+            if (pumpValue >= ingameUI.pump.maxValue && isReload)
+            {
+                isReload = false;
             }
         }
     }

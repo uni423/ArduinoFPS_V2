@@ -6,6 +6,10 @@ public class Main_StageSelect : UIBase
 {
     public void OnClick_Stage(int index)
     {
-        MainManager.Instance.photonEvent.On_SelectStageEvnet(index);
+        GameManager.Instance.UserInfoData.SetData(UserDataField.SelectedStage, index);
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+            SceneLoader.Load("SoloGameScene");
+        else if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            MainManager.Instance.photonEvent.SceneLoadEvent("MultiGameScene");
     }
 }

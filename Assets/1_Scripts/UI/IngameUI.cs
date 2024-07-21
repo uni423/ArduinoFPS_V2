@@ -13,6 +13,8 @@ public class IngameUI : UIBase
     public Transform scoreStackParent;
     public Text timeText;
 
+    public Slider pump;
+
     public override void Init()
     {
         base.Init();

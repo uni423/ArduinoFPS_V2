@@ -6,6 +6,6 @@ public class PC_Main_StageSelect : UIBase
 {
     public void OnClick_Stage(int index)
     {
-        MainManager.Instance.photonEvent.On_SelectStageEvnet(index);
+        MainManager.Instance.photonEvent.SceneLoadEvent("MultiGameScene");
     }
 }

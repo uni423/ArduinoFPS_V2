@@ -5,18 +5,17 @@ using Photon.Pun;
 
 public class PhotonEvent : MonoBehaviourPun
 {
-    public void On_SelectStageEvnet(int index)
-    { 
+    public void SceneLoadEvent(string SceneName)
+    {
         if (photonView.IsMine)
         {
-            photonView.RPC("Event_StageStart", RpcTarget.AllViaServer, index);
+            photonView.RPC("Event_SceneLoad", RpcTarget.AllViaServer, SceneName);
         }
     }
 
     [PunRPC]
-    public void Event_StageStart(int index)
+    public void Event_SceneLoad(string SceneName)
     {
-        GameManager.Instance.UserInfoData.SetData(UserDataField.SelectedStage, index);
-        PhotonNetwork.LoadLevel("GameScene");
+        PhotonNetwork.LoadLevel(SceneName);
     }
 }
