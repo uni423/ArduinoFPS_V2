@@ -10,8 +10,12 @@ public enum UIState
     _Mobile_Main_RoomSelect,
     _Main_PlayerConnect,
     _Main_StageSelect,
-    _InGameUI,
-    SoloGame_Result,
+    _SoloGame_Ingame,
+    _SoloGame_Result,
+    _Mobile_MultiGame_Ingame, 
+    _Mobile_MultiGame_Result, 
+    _PC_MultiGame_Ingame, 
+    _PC_MultiGame_Result, 
     _ErrorPage,
 }
 

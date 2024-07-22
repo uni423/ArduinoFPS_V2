@@ -56,7 +56,6 @@ public class InGameManager : MonoBehaviour
 
         IsPlaying = true;
         IsReSetting = false;
-
     }
 
     private void Update()
@@ -71,7 +70,7 @@ public class InGameManager : MonoBehaviour
         {
             IsPlaying = false;
             UIManager.Instance.HideUI();
-            UIManager.Instance.ShowUI(UIState.SoloGame_Result);
+            UIManager.Instance.ShowUI(UIState._SoloGame_Result);
             return;
         }
 
@@ -141,7 +140,7 @@ public class InGameManager : MonoBehaviour
     {
         score += addScore;
         UIManager.Instance.RefreshUserInfo();
-        (UIManager.Instance.GetUI(UIState._InGameUI) as IngameUI).AddScoreUI(addScore, isCombo);
+        (UIManager.Instance.GetUI(UIState._SoloGame_Ingame) as IngameUI).AddScoreUI(addScore, isCombo);
     }
 
     IEnumerator BabyRbSpawn(Vector3 getPoint)

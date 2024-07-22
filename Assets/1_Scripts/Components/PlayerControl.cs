@@ -48,7 +48,7 @@ public class PlayerControl : MonoBehaviour
         //InGameManager.IsPlaying = true;
         //isUsePump = true;
         isUsePump = !GameManager.Instance.bluetoothManager.IsConnected;
-        ingameUI = (UIManager.Instance.GetUI(UIState._InGameUI) as IngameUI);
+        ingameUI = (UIManager.Instance.GetUI(UIState._SoloGame_Ingame) as IngameUI);
     }
 
     void Update()

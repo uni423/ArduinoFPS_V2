@@ -91,9 +91,9 @@ public class SoloGame_Result : UIBase
                             lastRanking = 2;
                             break;
                         case 2:
-                            resultItems[3].gameObject.SetActive(true);
-                            resultItems[3].NameText.text = splitData[i + 1];
-                            resultItems[3].ScoreText.text = splitData[i + 2];
+                            resultItems[2].gameObject.SetActive(true);
+                            resultItems[2].NameText.text = splitData[i + 1];
+                            resultItems[2].ScoreText.text = splitData[i + 2];
                             lastRanking = 3;
                             break;
                     }
