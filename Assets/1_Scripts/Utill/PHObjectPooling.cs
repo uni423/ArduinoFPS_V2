@@ -27,7 +27,7 @@ public class PHObjectPooling : MonoBehaviourPun
 			Queue<GameObject> objectPool = new Queue<GameObject>();
 			for (int i = 0; i < pool.size; i++)
 			{
-				GameObject obj = PhotonNetwork.Instantiate(pool.tag, Vector3.zero, Quaternion.identity);
+				GameObject obj = PhotonNetwork.Instantiate("Prefabs/" + pool.tag, Vector3.zero, Quaternion.identity);
 				obj.GetComponent<PhotonView>().RPC("SetActiveRPC", RpcTarget.All, false);
 				objectPool.Enqueue(obj);
 			}

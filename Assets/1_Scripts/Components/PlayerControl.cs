@@ -45,10 +45,11 @@ public class PlayerControl : MonoBehaviour
         comboTimeCur = 0f;
         OnReload();
 
-        //InGameManager.IsPlaying = true;
-        //isUsePump = true;
         isUsePump = !GameManager.Instance.bluetoothManager.IsConnected;
-        ingameUI = (UIManager.Instance.GetUI(UIState._SoloGame_Ingame) as IngameUI);
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            ingameUI = (UIManager.Instance.GetUI(UIState._Mobile_MultiGame_Ingame) as IngameUI);
+        else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+            ingameUI = (UIManager.Instance.GetUI(UIState._SoloGame_Ingame) as IngameUI);
     }
 
     void Update()
@@ -155,11 +156,20 @@ public class PlayerControl : MonoBehaviour
             audioSource.clip = fireSFX[Random.Range(0, fireSFX.Length)];
             audioSource.Play();
             //Effect
-            InGameManager.ObjectPooling.Spawn("Player_Fire", null, bulletPoint.position);
+
+            if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+                Multi_InGameManager.PHObjectPooling.PoolInstantiate("Effect/Player_Fire", bulletPoint.position, Quaternion.identity);
+            else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+                InGameManager.ObjectPooling.Spawn("Player_Fire", null, bulletPoint.position);
 
             bulletCountCur--;
-            GameObject bullet = InGameManager.ObjectPooling.Spawn("Bullet");
-            bullet.transform.SetPositionAndRotation(bulletPoint.position, bulletPoint.rotation);
+            if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+                Multi_InGameManager.PHObjectPooling.PoolInstantiate("Bullet", bulletPoint.position, bulletPoint.rotation);
+            else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+            {
+                GameObject bullet = InGameManager.ObjectPooling.Spawn("Bullet");
+                bullet.transform.SetPositionAndRotation(bulletPoint.position, bulletPoint.rotation);
+            }
             UIManager.Instance.RefreshUserInfo();
         }
     }

@@ -4397,6 +4397,7 @@ Transform:
   - {fileID: 284698016}
   - {fileID: 1157867008}
   - {fileID: 1531497848}
+  - {fileID: 944000853}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -32429,6 +32430,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8374801657899745835, guid: 3c5d84533c5b9a24b9a27516ea649231, type: 3}
   m_PrefabInstance: {fileID: 941382532}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &944000852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 944000853}
+  m_Layer: 0
+  m_Name: Rabbit_SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &944000853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944000852}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 55, y: 1.2, z: -60}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 118865285}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &946245848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33612,7 +33643,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 981789757}
-  - component: {fileID: 981789756}
   - component: {fileID: 981789758}
   m_Layer: 0
   m_Name: IngameManager
@@ -33621,26 +33651,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &981789756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 981789755}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0311bb748e0b70042b04049d847f723c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
-  mapObjArr:
-  - {fileID: 877553174}
-  - {fileID: 1915221049}
-  - {fileID: 955359099}
-  - {fileID: 284698015}
-  playerControl: {fileID: 1136362935}
-  gameTime: 0
 --- !u!4 &981789757
 Transform:
   m_ObjectHideFlags: 0
@@ -33649,7 +33659,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 981789755}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0960698, y: 1.5082129, z: 2.451234}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -33673,10 +33683,12 @@ MonoBehaviour:
   - {fileID: 955359099}
   - {fileID: 284698015}
   playerSpawnPointArr:
-  - {fileID: 1157867007}
-  - {fileID: 1531497847}
-  - {fileID: 0}
+  - {fileID: 1157867008}
+  - {fileID: 1531497848}
+  rabbitSpawnPoint: {fileID: 944000853}
   photonEvent: {fileID: 146254576}
+  score: 0
+  gameTime: 0
 --- !u!1001 &983087746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39049,7 +39061,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1136362934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efa1157de4c705d4fab12311a0f0f338, type: 3}
   m_Name: 
@@ -51263,8 +51275,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1499494208}
-  - component: {fileID: 1499494207}
   - component: {fileID: 1499494209}
+  - component: {fileID: 1499494207}
   m_Layer: 0
   m_Name: ObjectPool
   m_TagString: Untagged
@@ -51285,25 +51297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolingObjects:
-  - prefab: {fileID: 1477795437316663806, guid: b13d2a94a4cad684fb18cbad7cb5465f, type: 3}
-    objectCount: 1
-  - prefab: {fileID: 5710356742963989011, guid: fdea7568c22494e4fba9bdde54468894, type: 3}
-    objectCount: 1
-  - prefab: {fileID: 5710356742963989011, guid: ab73c149579019d4fb849df9c3664b7d, type: 3}
-    objectCount: 1
-  - prefab: {fileID: 5710356742963989011, guid: 32d3da4eb27a9464585d955476dc28f9, type: 3}
-    objectCount: 1
-  - prefab: {fileID: 5710356742963989011, guid: ab4c4e96504e6644894e28fa2a6a8cca, type: 3}
-    objectCount: 1
-  - prefab: {fileID: 5710356742963989011, guid: 21f413591bf0c4c44bff537efada01f9, type: 3}
-    objectCount: 1
   - prefab: {fileID: 7004847412731397763, guid: 190fc7bb5b0781a44b9ac493ae22bcd8, type: 3}
-    objectCount: 1
-  - prefab: {fileID: 141433446842962269, guid: dd8a9727981ea7544b55a51f8d2bd6f9, type: 3}
-    objectCount: 1
-  - prefab: {fileID: 4021103657954561961, guid: 981a755bd1f9e014b8aaa235eec1bd75, type: 3}
-    objectCount: 1
-  - prefab: {fileID: 9157105887711914197, guid: b511997ed9faab349a773aa901e2cc20, type: 3}
     objectCount: 1
 --- !u!4 &1499494208
 Transform:
@@ -51331,7 +51325,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dac571482bcb24478ce90e6981697e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pools: []
+  pools:
+  - tag: Bullet
+    prefab: {fileID: 1477795437316663806, guid: 9a8f28bebef26a945ac82a17431a2d05, type: 3}
+    size: 10
+  - tag: Unit/Rabbit_Baby
+    prefab: {fileID: 5710356742963989011, guid: aa16f65b02a20d944ae4fa8bb3760f70, type: 3}
+    size: 1
+  - tag: Unit/Rabbit_BulkUp
+    prefab: {fileID: 5710356742963989011, guid: e19ee678c07be5e428bbe3fed55c7011, type: 3}
+    size: 1
+  - tag: Unit/Rabbit_Evolve
+    prefab: {fileID: 5710356742963989011, guid: f1fe2438bef8eb444a291200afb58b69, type: 3}
+    size: 1
+  - tag: Unit/Rabbit_Normal
+    prefab: {fileID: 5710356742963989011, guid: 7c024315b1b04f3499a2c690087313a0, type: 3}
+    size: 1
+  - tag: Unit/Rabbit_Strong
+    prefab: {fileID: 5710356742963989011, guid: 629001d0781a75443ba009a8dc6d9c55, type: 3}
+    size: 1
+  - tag: Effect/Player_Fire
+    prefab: {fileID: 141433446842962269, guid: 7d47c45884849f547859171386aa91b2, type: 3}
+    size: 1
+  - tag: Effect/Rabbit_Hit
+    prefab: {fileID: 4021103657954561961, guid: e0d37d8502bc29b44be245cb5f4c80d4, type: 3}
+    size: 1
+  - tag: Effect/Rabbit_Spawn
+    prefab: {fileID: 9157105887711914197, guid: 5e3074df5009bee40b7558da7500e53b, type: 3}
+    size: 1
 --- !u!1001 &1501415326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -73656,6 +73677,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9044113233994451037, guid: 7501853e24030764a851a1d80802cc69, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9044113233994451038, guid: 7501853e24030764a851a1d80802cc69, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -73748,7 +73773,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 6832629218579812137}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50790dbbf9122ec49be433001c5bc64f, type: 3}
   m_Name: 
@@ -73764,7 +73789,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 4090185728437790825}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50790dbbf9122ec49be433001c5bc64f, type: 3}
   m_Name: 
@@ -73784,6 +73809,10 @@ PrefabInstance:
     - target: {fileID: 6286284506709913654, guid: 388efa3cf8cec7744829ac393d2ac62e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7176385727096773128, guid: 388efa3cf8cec7744829ac393d2ac62e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7176385727096773131, guid: 388efa3cf8cec7744829ac393d2ac62e, type: 3}
       propertyPath: m_Pivot.x

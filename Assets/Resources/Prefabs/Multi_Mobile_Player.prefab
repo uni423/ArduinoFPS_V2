@@ -1385,7 +1385,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9208972886961875264}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efa1157de4c705d4fab12311a0f0f338, type: 3}
   m_Name: 
@@ -1420,7 +1420,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9208972886961875264}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 541a76f9c03874323b5154b14ac00427, type: 3}
   m_Name: 
@@ -2477,7 +2477,7 @@ GameObject:
   - component: {fileID: 9208972888368307774}
   - component: {fileID: 9208972888368307775}
   - component: {fileID: 9208972888368307768}
-  - component: {fileID: 7123161461703012381}
+  - component: {fileID: 925707933204426498}
   m_Layer: 0
   m_Name: Multi_Mobile_Player
   m_TagString: Untagged
@@ -2598,7 +2598,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7123161461703012381
+--- !u!114 &925707933204426498
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2607,9 +2607,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 9208972888368307770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7479df364c1a92a48a3cf203a9e820de, type: 3}
+  m_Script: {fileID: 11500000, guid: efa1157de4c705d4fab12311a0f0f338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletPoint: {fileID: 9208972886537214422}
+  bulletCountMax: 0
+  bulletCountCur: 0
+  comboCount: 0
+  comboTimeMax: 0
+  comboTimeCur: 0
+  isUsePump: 0
+  pumpValue: 0
+  pumpAddValue: 0
+  ingameUI: {fileID: 0}
+  audioSource: {fileID: 9208972887111924189}
+  reloadSFX:
+  - {fileID: 8300000, guid: 5673260888da73d48a04fc743d4b53ca, type: 3}
+  fireSFX:
+  - {fileID: 8300000, guid: 29b57c8603ed3fe41af64e48bcbd06ba, type: 3}
+  - {fileID: 8300000, guid: 29b57c8603ed3fe41af64e48bcbd06ba, type: 3}
+  - {fileID: 8300000, guid: 29b57c8603ed3fe41af64e48bcbd06ba, type: 3}
+  - {fileID: 8300000, guid: de619a6938fb1b34d8c391b36a4bbd83, type: 3}
+  - {fileID: 8300000, guid: de619a6938fb1b34d8c391b36a4bbd83, type: 3}
+  - {fileID: 8300000, guid: de619a6938fb1b34d8c391b36a4bbd83, type: 3}
+  - {fileID: 8300000, guid: 5f1b7d7d08553a14cbe6073a0e8e1deb, type: 3}
+  turnSpeed: 4
+  quaternion: {x: 90, y: 0, z: 0}
 --- !u!1001 &9208972886503586395
 PrefabInstance:
   m_ObjectHideFlags: 0
