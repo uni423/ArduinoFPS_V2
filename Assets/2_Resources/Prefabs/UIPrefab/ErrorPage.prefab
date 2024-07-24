@@ -247,6 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96608a2e317fe354c9be7412f60db24a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformType: 2
+  isEqualPlatform: 0
   text: {fileID: 8165347237828070296}
 --- !u!223 &5405945529546080020
 Canvas:

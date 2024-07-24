@@ -4423,6 +4423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e587a2e36935648a17db891d106e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformType: 2
+  isEqualPlatform: 0
 --- !u!223 &8081614351532652305
 Canvas:
   m_ObjectHideFlags: 0

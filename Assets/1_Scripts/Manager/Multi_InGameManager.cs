@@ -9,6 +9,8 @@ public class Multi_InGameManager : MonoBehaviour
 {
     public static Multi_InGameManager Instance;
 
+    public Multi_PlayerControl playerControl;
+
     public UnitManager unitManager { private set; get; }
 
     public static PHObjectPooling PHObjectPooling { get; private set; }
@@ -24,11 +26,11 @@ public class Multi_InGameManager : MonoBehaviour
     public static bool IsReSetting;
 
     private float rabbitSpawnTimer = 0f;
-    private float rabbitSpawnTime = 100f;//1.5f;
+    private float rabbitSpawnTime = 1.5f;
     private float rabbitSpawnRadius = 15f;
     public float score = 0;
     public float gameTime;
-    
+
     protected void Awake()
     {
         Instance = this;
@@ -36,28 +38,38 @@ public class Multi_InGameManager : MonoBehaviour
         PHObjectPooling = FindObjectOfType<PHObjectPooling>();
         ObjectPooling = FindObjectOfType<ObjectPooling>();
 
+        IsPlaying = false;
+        IsContinue = false;
+        IsReSetting = false;
+
+        unitManager = new UnitManager();
+        unitManager.Initialize();
+
         UIManager.Instance.Init();
 
         for (int i = 0; i < mapObjArr.Length; i++)
             mapObjArr[i].SetActive(i == GameManager.Instance.UserInfoData.selectedStage);
 
         DoReady();
+
+        UIManager.Instance.ChracterInit();
+        DoGameStart();
     }
 
     public void DoReady()
     {
+        PHObjectPooling.PrePoolInstantiate();
         if (GameManager.Instance.platform == PlatformType.PC)
         {
-            PHObjectPooling.PrePoolInstantiate();
             PhotonNetwork.Instantiate("Prefabs/Multi_PC_Cam", Vector3.zero, Quaternion.identity);
         }
         else if (GameManager.Instance.platform == PlatformType.Mobile)
         {
             int playerIndex = PhotonNetwork.LocalPlayer.GetPlayerNumber() - 1;
             GameObject player = PhotonNetwork.Instantiate("Prefabs/Multi_Mobile_Player", playerSpawnPointArr[playerIndex].position, playerSpawnPointArr[playerIndex].rotation);
-            player.SetActive(true); 
+            playerControl = player.GetComponent<Multi_PlayerControl>();
+            player.SetActive(true);
         }
-        DoGameStart();
     }
 
     public static void DoGameStart()
@@ -89,14 +101,17 @@ public class Multi_InGameManager : MonoBehaviour
             return;
         }
 
-        SpawnRabbit();
-
-        unitManager.OnUpdate(Time.deltaTime);
+        if (GameManager.Instance.platform == PlatformType.PC)
+        {
+            SpawnRabbit();
+            unitManager.OnUpdate(Time.deltaTime);
+        }
     }
 
     private void LateUpdate()
     {
-        unitManager.OnLateUpdate(Time.deltaTime);
+        if (GameManager.Instance.platform == PlatformType.PC)
+            unitManager.OnLateUpdate(Time.deltaTime);
     }
 
     public void SpawnRabbit()

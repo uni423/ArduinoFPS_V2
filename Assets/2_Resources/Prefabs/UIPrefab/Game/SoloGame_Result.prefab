@@ -2157,6 +2157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a31dcc1d5398ea4da70a6b34839e38a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformType: 1
+  isEqualPlatform: 0
   resultItems:
   - {fileID: 8379193662264870193}
   - {fileID: 512610363777265074}

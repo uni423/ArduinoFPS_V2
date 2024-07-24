@@ -11,7 +11,10 @@ public class EvolveRbUnit : RabbitUnit
         IsUpdate = true;
         IsDeath = false;
 
-        unitObject = InGameManager.ObjectPooling.Spawn<EvolveRbUnitObject>(this.unitData.model);
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            unitObject = Multi_InGameManager.PHObjectPooling.PoolInstantiate("Unit/" + this.unitData.model, Vector3.zero, Quaternion.identity).GetComponent<EvolveRbUnitObject>();
+        else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+            unitObject = InGameManager.ObjectPooling.Spawn<EvolveRbUnitObject>(this.unitData.model);
         //unitObject.model.transform.localPosition = Vector3.zero;
         //unitObject.model.transform.localRotation = Quaternion.identity;
         base.unitObject = unitObject;
@@ -43,7 +46,11 @@ public class EvolveRbUnit : RabbitUnit
 
                 //Sound
                 //Effect
-                InGameManager.ObjectPooling.Spawn("Rabbit_Hit", null, unitObject.cachedTransform.position);
+
+                if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+                    InGameManager.ObjectPooling.Spawn("Rabbit_Hit", null, unitObject.cachedTransform.position);
+                else if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+                    Multi_InGameManager.PHObjectPooling.PoolInstantiate("Effect/Rabbit_Hit", unitObject.cachedTransform.position, Quaternion.identity);
 
                 hp -= 10;
                 //ChangeFSMState(StateMachine.State.Hit);

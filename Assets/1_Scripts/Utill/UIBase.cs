@@ -4,7 +4,15 @@ using UnityEngine;
 
 public abstract class UIBase : MonoBehaviour
 {
-    public virtual void Init() { }
+    public PlatformType platformType;
+    public bool isEqualPlatform;
+
+    public virtual void Init()
+    {
+        isEqualPlatform = GameManager.Instance.platform == platformType;
+    }
+
+    public virtual void CharacterInit() { }
 
     public virtual void ActiveOff()
     {

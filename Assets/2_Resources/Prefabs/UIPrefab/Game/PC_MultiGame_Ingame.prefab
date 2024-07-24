@@ -282,7 +282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9044113233994451038}
-  - component: {fileID: 9044113233994451037}
+  - component: {fileID: 8845204349516204132}
   - component: {fileID: 9044113233994451039}
   - component: {fileID: 9044113233994450976}
   - component: {fileID: 9044113233994450977}
@@ -314,7 +314,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &9044113233994451037
+--- !u!114 &8845204349516204132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -323,21 +323,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 9044113233994450978}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50790dbbf9122ec49be433001c5bc64f, type: 3}
+  m_Script: {fileID: 11500000, guid: 835235d1a51534049bd3e66be1bc0ed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletImage:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  bulletOnColor: {r: 1, g: 1, b: 1, a: 1}
-  bulletOffColor: {r: 0.40392157, g: 0.40392157, b: 0.40392157, a: 0.78431374}
   scoreText: {fileID: 7817025388592116901}
   scoreStackParent: {fileID: 5910455461456533158}
   timeText: {fileID: 6421819740126750766}
-  pump: {fileID: 0}
 --- !u!223 &9044113233994451039
 Canvas:
   m_ObjectHideFlags: 0

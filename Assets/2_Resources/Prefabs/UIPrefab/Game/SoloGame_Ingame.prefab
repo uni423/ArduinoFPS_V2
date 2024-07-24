@@ -1333,6 +1333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50790dbbf9122ec49be433001c5bc64f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformType: 1
+  isEqualPlatform: 0
   bulletImage:
   - {fileID: 2898500731967893371}
   - {fileID: 7423006797814811169}

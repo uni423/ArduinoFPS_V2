@@ -7,7 +7,10 @@ public class RabbitDeSpawnHandle : StateHandle
     /// </summary>
     public override void OnEnter()
     {
-        InGameManager.ObjectPooling.Despawn(parent.unitObject.gameObject);
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            Multi_InGameManager.PHObjectPooling.PoolDestroy(parent.unitObject.gameObject);
+        else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+            InGameManager.ObjectPooling.Despawn(parent.unitObject.gameObject);
     }
 
     /// <summary>

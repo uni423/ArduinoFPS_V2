@@ -18,6 +18,7 @@ public class PlayerControl : MonoBehaviour
     public float pumpValue;
     public float pumpAddValue;
     public IngameUI ingameUI;
+    public Mobile_MultiGame_Ingame multiIngameUI;
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -47,20 +48,23 @@ public class PlayerControl : MonoBehaviour
 
         isUsePump = !GameManager.Instance.bluetoothManager.IsConnected;
         if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
-            ingameUI = (UIManager.Instance.GetUI(UIState._Mobile_MultiGame_Ingame) as IngameUI);
+            multiIngameUI = (UIManager.Instance.GetUI(UIState._Mobile_MultiGame_Ingame) as Mobile_MultiGame_Ingame);
         else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
             ingameUI = (UIManager.Instance.GetUI(UIState._SoloGame_Ingame) as IngameUI);
     }
 
     void Update()
     {
-        if (InGameManager.IsPlaying == false)
-            return;
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            if (Multi_InGameManager.IsPlaying == false) return;
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+            if (InGameManager.IsPlaying == false) return;
 
         //이동
 #if UNITY_EDITOR
         MouseRotation();
 #else
+        Debug.Log("PlayerControl Update" + GyroManager.Instance.GetGyroRotation());
         transform.localRotation = Quaternion.Euler(quaternion) * (GyroManager.Instance.GetGyroRotation() * baseRotation);
 #endif
 
@@ -98,22 +102,45 @@ public class PlayerControl : MonoBehaviour
         //컨트롤러 없을 때 펌프 사용
         if (isUsePump)
         {
-            pumpValue = ingameUI.pump.value;
-            if (pumpValue <= 100 && !isReload)
+            if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
             {
-                isReload = true;
-                OnReload();
+                pumpValue = multiIngameUI.pump.value;
+                if (pumpValue <= 100 && !isReload)
+                {
+                    isReload = true;
+                    OnReload();
+                }
+                if (pumpValue < multiIngameUI.pump.maxValue)
+                {
+                    float max = multiIngameUI.pump.maxValue;
+                    if (max > multiIngameUI.pump.maxValue) max = multiIngameUI.pump.maxValue;
+                    pumpValue += Mathf.Lerp(0, max, Time.deltaTime * pumpAddValue);
+                    multiIngameUI.pump.value = pumpValue;
+                }
+                if (pumpValue >= multiIngameUI.pump.maxValue && isReload)
+                {
+                    isReload = false;
+                }
             }
-            if (pumpValue < ingameUI.pump.maxValue)
+            else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
             {
-                float max = ingameUI.pump.maxValue;
-                if (max > ingameUI.pump.maxValue) max = ingameUI.pump.maxValue;
-                pumpValue += Mathf.Lerp(0, max, Time.deltaTime * pumpAddValue);
-                ingameUI.pump.value = pumpValue;
-            }
-            if (pumpValue >= ingameUI.pump.maxValue && isReload)
-            {
-                isReload = false;
+                pumpValue = ingameUI.pump.value;
+                if (pumpValue <= 100 && !isReload)
+                {
+                    isReload = true;
+                    OnReload();
+                }
+                if (pumpValue < ingameUI.pump.maxValue)
+                {
+                    float max = ingameUI.pump.maxValue;
+                    if (max > ingameUI.pump.maxValue) max = ingameUI.pump.maxValue;
+                    pumpValue += Mathf.Lerp(0, max, Time.deltaTime * pumpAddValue);
+                    ingameUI.pump.value = pumpValue;
+                }
+                if (pumpValue >= ingameUI.pump.maxValue && isReload)
+                {
+                    isReload = false;
+                }
             }
         }
     }
@@ -203,7 +230,12 @@ public class PlayerControl : MonoBehaviour
         comboCount++;
         comboTimeCur = 0f;
         if (comboCount > 1)
-            InGameManager.Instance.AddScore(comboCount, true);
+        {
+            if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+                Multi_InGameManager.Instance.AddScore(comboCount, true);
+            else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+                InGameManager.Instance.AddScore(comboCount, true);
+        }
     }
 
     #region [Coroutine]

@@ -12,8 +12,17 @@ public class RabbitDeathHandle : StateHandle
         unit = parent as RabbitUnit;
         unit.IsDeath = true;
         unit.SetAnimationParam("IsDeath", true);
-        InGameManager.Instance.AddScore(parent.unitData.point);
-        InGameManager.Instance.playerControl.SetCombo();
+
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+        {
+            Multi_InGameManager.Instance.AddScore(parent.unitData.point);
+            Multi_InGameManager.Instance.playerControl.SetCombo();
+        }
+        else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+        {
+            InGameManager.Instance.AddScore(parent.unitData.point);
+            InGameManager.Instance.playerControl.SetCombo();
+        }
     }
 
     /// <summary>
@@ -25,7 +34,10 @@ public class RabbitDeathHandle : StateHandle
         time += delta;
         if (time >= 3f)
         {
-            InGameManager.ObjectPooling.Despawn(parent.unitObject.gameObject);
+            if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+                Multi_InGameManager.PHObjectPooling.PoolDestroy(parent.unitObject.gameObject);
+            else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+                InGameManager.ObjectPooling.Despawn(parent.unitObject.gameObject);
         }
     }
 

@@ -38,6 +38,7 @@ public enum PlatformType
 {
     PC, 
     Mobile, 
+    Common, 
 }
 
 public enum GamePlayerType

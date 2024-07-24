@@ -43,11 +43,28 @@ public class PHObjectPooling : MonoBehaviourPun
 			return null;
 		}
 
-		GameObject obj = poolDictionary[tag].Dequeue();
+		GameObject obj = null;
+		Queue<GameObject> objectPool = poolDictionary[tag];
+
+		foreach (var pooledObject in objectPool)
+		{
+			if (!pooledObject.activeInHierarchy)
+			{
+				obj = pooledObject;
+				break;
+			}
+		}
+
+		if (obj == null)
+		{
+			obj = PhotonNetwork.Instantiate("Prefabs/" + tag, Vector3.zero, Quaternion.identity);
+			obj.GetComponent<PhotonView>().RPC("SetActiveRPC", RpcTarget.All, false);
+			objectPool.Enqueue(obj);
+		}
+
 		obj.GetComponent<PhotonView>().RPC("SetActiveRPC", RpcTarget.All, true);
 		obj.transform.position = position;
 		obj.transform.rotation = rotation;
-		poolDictionary[tag].Enqueue(obj);
 
 		return obj;
 	}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class BabyRbUnit : RabbitUnit
 {
@@ -11,7 +12,10 @@ public class BabyRbUnit : RabbitUnit
         IsUpdate = true;
         IsDeath = false;
 
-        unitObject = InGameManager.ObjectPooling.Spawn<BabyRbUnitObject>(this.unitData.model);
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            unitObject = Multi_InGameManager.PHObjectPooling.PoolInstantiate("Unit/" + this.unitData.model, Vector3.zero, Quaternion.identity).GetComponent<BabyRbUnitObject>();
+        else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+            unitObject = InGameManager.ObjectPooling.Spawn<BabyRbUnitObject>(this.unitData.model);
         //unitObject.model.transform.localPosition = Vector3.zero;
         //unitObject.model.transform.localRotation = Quaternion.identity;
         base.unitObject = unitObject;
@@ -32,6 +36,12 @@ public class BabyRbUnit : RabbitUnit
         RegistHandler();
     }
 
+    [PunRPC]
+    public void Set()
+    {
+
+    }
+
     public override void Hit(AttackType type)
     {
         if (IsDeath == true)
@@ -43,7 +53,11 @@ public class BabyRbUnit : RabbitUnit
 
                 //Sound
                 //Effect
-                InGameManager.ObjectPooling.Spawn("Rabbit_Hit", null, unitObject.cachedTransform.position);
+
+                if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+                    InGameManager.ObjectPooling.Spawn("Rabbit_Hit", null, unitObject.cachedTransform.position);
+                else if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+                    Multi_InGameManager.PHObjectPooling.PoolInstantiate("Effect/Rabbit_Hit", unitObject.cachedTransform.position, Quaternion.identity);
 
                 hp -= 10;
                 //ChangeFSMState(StateMachine.State.Hit);

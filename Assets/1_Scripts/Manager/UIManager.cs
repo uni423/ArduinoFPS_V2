@@ -53,6 +53,15 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ChracterInit()
+    {
+        for (int i = 0; i < uiDataLists.Count; i++)
+        {
+            if (uiDataLists[i] != null)
+                uiDataLists[i].CharacterInit();
+        }
+    }
+
     public void RefreshUserInfo()
     {
         onRefreshUserInfoUI?.Invoke();

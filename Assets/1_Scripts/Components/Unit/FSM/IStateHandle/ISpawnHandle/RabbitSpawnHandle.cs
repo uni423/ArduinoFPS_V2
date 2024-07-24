@@ -13,7 +13,11 @@ public class RabbitSpawnHandle : StateHandle
         unitObject.audioSource.clip = unitObject.spawnSFX[Random.Range(0, unitObject.spawnSFX.Length)];
         unitObject.audioSource.Play();
         //Effect
-        InGameManager.ObjectPooling.Spawn("Rabbit_Spawn", null, unitObject.cachedTransform.position);
+
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            Multi_InGameManager.PHObjectPooling.PoolInstantiate("Effect/Rabbit_Spawn", unitObject.cachedTransform.position, Quaternion.identity);
+        else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+            InGameManager.ObjectPooling.Spawn("Rabbit_Spawn", null, unitObject.cachedTransform.position);
     }
     float time = 0;
 

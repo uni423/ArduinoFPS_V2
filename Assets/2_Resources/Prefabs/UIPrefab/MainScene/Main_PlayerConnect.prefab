@@ -56,6 +56,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7505b6c1e55ab974eb4aa5d537ca3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platformType: 2
+  isEqualPlatform: 0
   RoomNameText: {fileID: 9039390086291988319}
   Player1: {fileID: 8406893741818110314}
   Player2: {fileID: 7595704019303085328}
