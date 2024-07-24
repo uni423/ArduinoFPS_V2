@@ -13,7 +13,7 @@ public class Mobile_Main_RoomSelect_RoomList : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         base.OnRoomListUpdate(roomList);
-
+        Debug.LogError("Room List Updates");
         RemoveRoomListUI();
         UpdateRoomCache(roomList);
         CreateRoomListUI();

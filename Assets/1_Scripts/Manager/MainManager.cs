@@ -7,6 +7,7 @@ using Photon.Realtime;
 public class MainManager : MonoBehaviourPunCallbacks
 {
     public PhotonEvent photonEvent;
+    public GameObject playerNumbering;
 
     public static MainManager Instance;
     private readonly string gameVersion = "v1.0";
@@ -101,10 +102,6 @@ public class MainManager : MonoBehaviourPunCallbacks
 
     #endregion
 
-    public void SelectStage(int index)
-    {
-    }
-
     #endregion
 
     #region PC
@@ -130,6 +127,7 @@ public class MainManager : MonoBehaviourPunCallbacks
         base.OnCreatedRoom();
         Debug.LogError("Room Created");
         (UIManager.Instance.GetUI(UIState._Main_PlayerConnect) as PC_Main_PlayerConnect).SetRoomName(PhotonNetwork.CurrentRoom.Name);
+        playerNumbering.SetActive(true);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -165,7 +163,6 @@ public class MainManager : MonoBehaviourPunCallbacks
         else
         {
             GameManager.Instance.gamePlayType = GamePlayerType.Multi;
-
             ConnetToMaster();
         }
     }
@@ -185,6 +182,7 @@ public class MainManager : MonoBehaviourPunCallbacks
             UIManager.Instance.HideUI();
             UIManager.Instance.ShowUI(UIState._Main_PlayerConnect);
             ChangePlayerCount();
+            playerNumbering.SetActive(true);
         }
     }
 

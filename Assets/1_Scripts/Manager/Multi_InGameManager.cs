@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 
 public class Multi_InGameManager : MonoBehaviourPunCallbacks
@@ -37,16 +38,9 @@ public class Multi_InGameManager : MonoBehaviourPunCallbacks
         }
         else if (GameManager.Instance.platform == PlatformType.Mobile)
         {
-            GameObject player = null;
-            if (photonEvent.multi_PlayerControls.Count <= 0)
-            {
-                player = PhotonNetwork.Instantiate("Multi_Mobile_Player", playerSpawnPointArr[0].transform.position, playerSpawnPointArr[0].transform.rotation);
-            }
-            else if (photonEvent.multi_PlayerControls.Count <= 1)
-            {
-                player = PhotonNetwork.Instantiate("Multi_Mobile_Player", playerSpawnPointArr[1].transform.position, playerSpawnPointArr[1].transform.rotation);
-            }
-            photonEvent.AddPlayer(player.GetComponent<Multi_PlayerControl>());
+            int playerIndex = PhotonNetwork.LocalPlayer.GetPlayerNumber() - 1;
+            GameObject player = PhotonNetwork.Instantiate("Multi_Mobile_Player", playerSpawnPointArr[playerIndex].transform.position, playerSpawnPointArr[playerIndex].transform.rotation);
+            //photonEvent.AddPlayer(player.GetComponent<Multi_PlayerControl>());
             player.SetActive(true); 
         }
     }
