@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -6,8 +6,9 @@ using UnityEngine.AI;
 using Photon.Pun;
 
 [RequireComponent(typeof(Rigidbody))]
-public class UnitObject : MonoBehaviourPunCallbacks
-{    
+
+public class UnitObject_Multi : MonoBehaviourPunCallbacks
+{
     public Unit unit { get; protected set; }
     public Animator animator;
     public GameObject model;
@@ -64,7 +65,9 @@ public class UnitObject : MonoBehaviourPunCallbacks
     }
 
     public void Update()
-    {        
+    {
+        if (!photonView.IsMine) return;
+
         curState = unit.GetFSMState();
     }
 }
