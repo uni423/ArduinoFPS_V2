@@ -64,7 +64,10 @@ public class UnitObject : MonoBehaviourPunCallbacks
     }
 
     public void Update()
-    {        
+    {
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            if (!photonView.IsMine) return;
+
         curState = unit.GetFSMState();
     }
 }

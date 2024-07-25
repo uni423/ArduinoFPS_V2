@@ -15,8 +15,8 @@ public class RabbitDeathHandle : StateHandle
 
         if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
         {
-            Multi_InGameManager.Instance.AddScore(parent.unitData.point);
-            Multi_InGameManager.Instance.playerControl.SetCombo();
+            Multi_InGameManager.Instance.photonEvent.AddScore(parent.unitData.point);
+            Multi_InGameManager.Instance.photonEvent.SetCombo(unit.lastDamagedPlayerNumber);
         }
         else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
         {

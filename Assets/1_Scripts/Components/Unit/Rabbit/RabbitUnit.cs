@@ -6,6 +6,8 @@ public class RabbitUnit : Unit
 {
     RabbitUnitObject unitObject;
 
+    public int lastDamagedPlayerNumber;
+
     public override void Initialize()
     {
         IsUpdate = true;
@@ -33,6 +35,8 @@ public class RabbitUnit : Unit
 
         SetStat();
         RegistHandler();
+
+        lastDamagedPlayerNumber = 0;
     }
 
     public override void RegistHandler()

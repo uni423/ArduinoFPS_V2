@@ -13,6 +13,10 @@ public class AddScoreTextObj : MonoBehaviour
     IEnumerator Timer()
     {
         yield return new WaitForSeconds(3f);
-        InGameManager.ObjectPooling.Despawn(gameObject);
+
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+            InGameManager.ObjectPooling.Despawn(gameObject);
+        else if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            Multi_InGameManager.ObjectPooling.Despawn(gameObject);
     }
 }

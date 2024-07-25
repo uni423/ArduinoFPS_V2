@@ -4,12 +4,14 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class Multi_PlayerControl : MonoBehaviourPunCallbacks
+public class Multi_PlayerControl : MonoBehaviourPunCallbacks, IPunObservable
 {
     #region [Value]
 
     public GameObject mine;
     public GameObject yours;
+
+    public Animator animator;
 
     #region [총]
 
@@ -43,6 +45,10 @@ public class Multi_PlayerControl : MonoBehaviourPunCallbacks
 
     private Quaternion baseRotation = new Quaternion(0, 0, 1, 0);
     public Vector3 quaternion;
+
+    public Transform mineTransform; 
+    public Transform yoursTransform; //상반신만 움직이도록 하기 위해 하반신 고정용
+    public Transform spineTransform; //상반신만 움직이도록 하기 위해 상반식 이동용
     #endregion
 
     #endregion
@@ -62,6 +68,7 @@ public class Multi_PlayerControl : MonoBehaviourPunCallbacks
 
         isUsePump = !GameManager.Instance.bluetoothManager.IsConnected;
         multiIngameUI = (UIManager.Instance.GetUI(UIState._Mobile_MultiGame_Ingame) as Mobile_MultiGame_Ingame);
+        multiIngameUI.pump.gameObject.SetActive(isUsePump);
     }
 
     void Update()
@@ -73,9 +80,13 @@ public class Multi_PlayerControl : MonoBehaviourPunCallbacks
 #if UNITY_EDITOR
         MouseRotation();
 #else
-        transform.localRotation = Quaternion.Euler(quaternion) * (GyroManager.Instance.GetGyroRotation() * baseRotation);
-#endif
+        mineTransform.localRotation = Quaternion.Euler(quaternion) * (GyroManager.Instance.GetGyroRotation() * baseRotation);
+        Quaternion totalRotation = Quaternion.Euler(quaternion) * (GyroManager.Instance.GetGyroRotation() * baseRotation);
 
+        yoursTransform.localRotation = Quaternion.Euler(0, totalRotation.eulerAngles.y, 0);
+        spineTransform.localRotation = Quaternion.Euler(totalRotation.eulerAngles.x, 0, totalRotation.eulerAngles.z);
+        
+#endif
         //공격
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Home))
         {
@@ -111,7 +122,7 @@ public class Multi_PlayerControl : MonoBehaviourPunCallbacks
         if (isUsePump)
         {
             pumpValue = multiIngameUI.pump.value;
-            if (pumpValue <= 100 && !isReload)
+            if (pumpValue <= (multiIngameUI.pump.maxValue * 0.1f) && !isReload)
             {
                 isReload = true;
                 OnReload();
@@ -127,6 +138,20 @@ public class Multi_PlayerControl : MonoBehaviourPunCallbacks
             {
                 isReload = false;
             }
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(yoursTransform.localRotation);
+            stream.SendNext(spineTransform.localRotation);
+        }
+        else
+        {
+            yoursTransform.localRotation = (Quaternion)stream.ReceiveNext();
+            spineTransform.localRotation = (Quaternion)stream.ReceiveNext();
         }
     }
 
@@ -169,6 +194,9 @@ public class Multi_PlayerControl : MonoBehaviourPunCallbacks
             //Effect
             Multi_InGameManager.PHObjectPooling.PoolInstantiate("Effect/Player_Fire", bulletPoint.position, Quaternion.identity);
 
+            //Animation
+            animator.SetTrigger("Fire");
+
             bulletCountCur--;
 
             Multi_InGameManager.PHObjectPooling.PoolInstantiate("Bullet", bulletPoint.position, bulletPoint.rotation);
@@ -180,8 +208,13 @@ public class Multi_PlayerControl : MonoBehaviourPunCallbacks
     {
         if (bulletCountCur < bulletCountMax)
         {
+            //Sound
             audioSource.clip = reloadSFX[Random.Range(0, reloadSFX.Length)];
             audioSource.Play();
+
+            //Animation
+            animator.SetTrigger("Reload");
+
             bulletCountCur = bulletCountMax;
             UIManager.Instance.RefreshUserInfo();
         }
@@ -205,7 +238,7 @@ public class Multi_PlayerControl : MonoBehaviourPunCallbacks
         if (comboCount > 1)
         {
             if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
-                Multi_InGameManager.Instance.AddScore(comboCount, true);
+                Multi_InGameManager.Instance.photonEvent.AddScore(comboCount, true);
             else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
                 InGameManager.Instance.AddScore(comboCount, true);
         }

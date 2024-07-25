@@ -64,7 +64,6 @@ public class PlayerControl : MonoBehaviour
 #if UNITY_EDITOR
         MouseRotation();
 #else
-        Debug.Log("PlayerControl Update" + GyroManager.Instance.GetGyroRotation());
         transform.localRotation = Quaternion.Euler(quaternion) * (GyroManager.Instance.GetGyroRotation() * baseRotation);
 #endif
 
@@ -232,7 +231,7 @@ public class PlayerControl : MonoBehaviour
         if (comboCount > 1)
         {
             if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
-                Multi_InGameManager.Instance.AddScore(comboCount, true);
+                Multi_InGameManager.Instance.photonEvent.AddScore(comboCount, true);
             else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
                 InGameManager.Instance.AddScore(comboCount, true);
         }

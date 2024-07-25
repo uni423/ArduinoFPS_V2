@@ -13,8 +13,6 @@ public class SoloGame_Result : UIBase
     public GameObject nameInputObj;
     public Text myNameText;
 
-    public PhotonEvent photonEvent;
-
     public override void ShowUI()
     {
         base.ShowUI();
@@ -71,29 +69,34 @@ public class SoloGame_Result : UIBase
             {
                 string[] splitData = Regex.Split(dataText, @"_");
                 int lastRanking = 0;
-                for (int i = 0; i < mc.Count; i += 3)
+                for (int i = 0; i < mc.Count; i += 4)
                 {
                     int stageNumber = int.Parse(splitData[i]);
                     if (stageNumber != stage)
                         continue;
+                    if (GameManager.Instance.gamePlayType == GamePlayerType.Multi && splitData[i + 1] != "multi "
+                        || GameManager.Instance.gamePlayType == GamePlayerType.Solo && splitData[i + 1] != "solo ")
+                        continue;
+
+                    Debug.LogError("Ranking Get : " + splitData[i + 1]);
                     switch (lastRanking)
                     {
                         case 0:
                             resultItems[0].gameObject.SetActive(true);
-                            resultItems[0].NameText.text = splitData[i + 1];
-                            resultItems[0].ScoreText.text = splitData[i + 2];
+                            resultItems[0].NameText.text = splitData[i + 2];
+                            resultItems[0].ScoreText.text = splitData[i + 3];
                             lastRanking = 1;
                             break;
                         case 1:
                             resultItems[1].gameObject.SetActive(true);
-                            resultItems[1].NameText.text = splitData[i + 1];
-                            resultItems[1].ScoreText.text = splitData[i + 2];
+                            resultItems[1].NameText.text = splitData[i + 2];
+                            resultItems[1].ScoreText.text = splitData[i + 3];
                             lastRanking = 2;
                             break;
                         case 2:
                             resultItems[2].gameObject.SetActive(true);
-                            resultItems[2].NameText.text = splitData[i + 1];
-                            resultItems[2].ScoreText.text = splitData[i + 2];
+                            resultItems[2].NameText.text = splitData[i + 2];
+                            resultItems[2].ScoreText.text = splitData[i + 3];
                             lastRanking = 3;
                             break;
                     }
@@ -109,6 +112,7 @@ public class SoloGame_Result : UIBase
         form.AddField("playerName", name);
         form.AddField("score", score);
         form.AddField("stage", GameManager.Instance.UserInfoData.selectedStage);
+        form.AddField("playType", "solo");
 
         UnityWebRequest www = UnityWebRequest.Post(addScoreURL, form);
 

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviourPunCallbacks
 {
     public float speed = 8f;
     public float maxVelocityX, maxVelocityY, maxVelocityZ;
@@ -22,7 +23,6 @@ public class Bullet : MonoBehaviour
     public void OnEnable()
     {
         isCollisioin = false;
-        Debug.Log("Carrot Init");
         time = 0;
         if (rigidbody != null)
         {
@@ -33,25 +33,25 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            if (!photonView.IsMine) return;
+
         time += Time.deltaTime;
         if (!isCollisioin)
         {
             cachedTransform.position += transform.forward * speed * Time.deltaTime;
             if (time >= 1f && rigidbody.useGravity == false)
                 rigidbody.useGravity = true;
-
-            //rigidbody.AddForce(cachedTransform.forward * speed * Time.deltaTime, ForceMode.Impulse);
-            //limitSpeed();
         }
         else
         {
             if (time >= 3f)
             {
-                if(GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+                if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
                 {
                     Multi_InGameManager.PHObjectPooling.PoolDestroy(gameObject);
                 }
-                else if(GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+                else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
                     InGameManager.ObjectPooling.Despawn(gameObject);
             }
         }
@@ -64,34 +64,28 @@ public class Bullet : MonoBehaviour
         if (rigidbody.velocity.x > maxVelocityX)
         {
             vector3.x = maxVelocityX;
-            //rigidbody.velocity = new Vector3(maxVelocityX, rigidbody.velocity.y, rigidbody.velocity.z);
         }
         if (rigidbody.velocity.x < (maxVelocityX * -1))
         {
             vector3.x = (maxVelocityX * -1);
-            //rigidbody.velocity = new Vector3((maxVelocityX * -1), rigidbody.velocity.y, rigidbody.velocity.z);
         }
 
         if (rigidbody.velocity.y > maxVelocityY)
         {
             vector3.y = maxVelocityY;
-            //rigidbody.velocity = new Vector3(rigidbody.velocity.x, maxVelocityY, rigidbody.velocity.z);
         }
         if (rigidbody.velocity.y < (maxVelocityY * -1))
         {
             vector3.y = (maxVelocityY * -1);
-            //rigidbody.velocity = new Vector3(rigidbody.velocity.x, (maxVelocityY * -1), rigidbody.velocity.z);
         }
 
         if (rigidbody.velocity.z > maxVelocityZ)
         {
             vector3.z = maxVelocityZ;
-            //rigidbody.velocity = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, maxVelocityZ);
         }
         if (rigidbody.velocity.z < (maxVelocityZ * -1))
         {
             vector3.z = (maxVelocityZ * -1);
-            //rigidbody.velocity = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, (maxVelocityZ * -1));
         }
         rigidbody.velocity = vector3;
     }
@@ -101,10 +95,18 @@ public class Bullet : MonoBehaviour
         time = 0f;
         if (collision.gameObject.CompareTag("Enemy") && !isCollisioin)
         {
-            RabbitUnit rabbitUnit = (RabbitUnit)collision.transform.GetComponent<RabbitUnitObject>().unit;
-            rabbitUnit.Hit(AttackType.Normal);
+            if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+            {
+                RabbitUnit rabbitUnit = (RabbitUnit)collision.transform.GetComponent<RabbitUnitObject>().unit;
+                rabbitUnit.Hit(AttackType.Normal);
+            }
+            else if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+            {
+                RabbitUnitObject rabbitObj = collision.transform.GetComponent<RabbitUnitObject>();
+                rabbitObj.Hit(AttackType.Normal);
+            }
         }
-        
+
         isCollisioin = true;
     }
 }

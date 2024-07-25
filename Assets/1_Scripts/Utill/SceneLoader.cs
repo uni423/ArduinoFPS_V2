@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public enum SceneType
 {
+    LoadScene, 
     MainScene,
-    GameScene,
+    SoloGameScene, 
+    MultiGameScene, 
 }
 
 public static class SceneLoader

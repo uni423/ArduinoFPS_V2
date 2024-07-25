@@ -79,7 +79,8 @@ public class Multi_InGameManager : MonoBehaviour
         IsPlaying = true;
         IsReSetting = false;
 
-        Instance.gameTime = 60;
+        //Instance.gameTime = 60;
+        Instance.gameTime = 9999999;
     }
 
     private void Update()
@@ -164,13 +165,6 @@ public class Multi_InGameManager : MonoBehaviour
 
             unitManager.Regist(rabbit);
         }
-    }
-
-    public void AddScore(int addScore, bool isCombo = false)
-    {
-        score += addScore;
-        UIManager.Instance.RefreshUserInfo();
-        (UIManager.Instance.GetUI(UIState._SoloGame_Ingame) as IngameUI).AddScoreUI(addScore, isCombo);
     }
 
     #region Coroutine
