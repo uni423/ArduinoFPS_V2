@@ -193,4 +193,28 @@ public class MainManager : MonoBehaviourPunCallbacks
         (UIManager.Instance.GetUI(UIState._ErrorPage) as ErrorPage).text.text = "Join Room Failed \"" + returnCode + "\"" + message + "\"";
     }
     #endregion
+
+    #region UI
+
+    public void RoomSelectBack()
+    {
+        StartCoroutine(DisconnectCause());
+    }
+
+    public IEnumerator DisconnectCause()
+    {
+        if (PhotonNetwork.IsConnected)
+            PhotonNetwork.Disconnect();
+        while (PhotonNetwork.IsConnected)
+        {
+            yield return null;
+            SceneLoader.Load("MainScene");
+        }
+    }
+
+    public void BackPlayerConnect()
+    {
+        StartCoroutine(DisconnectCause());
+    }
+    #endregion
 }

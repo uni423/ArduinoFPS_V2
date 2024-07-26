@@ -79,8 +79,8 @@ public class Multi_InGameManager : MonoBehaviour
         IsPlaying = true;
         IsReSetting = false;
 
-        //Instance.gameTime = 60;
-        Instance.gameTime = 9999999;
+        Instance.gameTime = 10;
+        //Instance.gameTime = 9999999;
     }
 
     private void Update()
@@ -182,6 +182,25 @@ public class Multi_InGameManager : MonoBehaviour
                 , Quaternion.Euler(0, Random.Range(0, 360f), 0));
             unitManager.Regist(baby);
             yield return new WaitForSeconds(0.1f);
+        }
+    }
+    #endregion
+
+    #region UI
+
+    public void Result_MainMenu()
+    {
+        StartCoroutine(DisconnectCause());
+    }
+
+    public IEnumerator DisconnectCause()
+    {
+        if (PhotonNetwork.IsConnected)
+            PhotonNetwork.Disconnect();
+        while (PhotonNetwork.IsConnected)
+        {
+            yield return null;
+            SceneLoader.Load("MainScene");
         }
     }
 

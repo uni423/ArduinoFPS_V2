@@ -1895,8 +1895,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoloGame_Result, Assembly-CSharp
+      - m_Target: {fileID: 126796819886890125}
+        m_TargetAssemblyTypeName: PC_MultiGame_Result, Assembly-CSharp
         m_MethodName: OnClick_SendScoreBtn
         m_Mode: 1
         m_Arguments:

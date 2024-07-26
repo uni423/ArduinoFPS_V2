@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class Mobile_Main_RoomSelect : UIBase
 {
-    //UIBase를 위해 껍데기만 존재
     public Mobile_Main_RoomSelect_RoomList roomList;
+    public GameObject Loading;
+
+    public override void ShowUI()
+    {
+        base.ShowUI();
+
+        Loading.SetActive(false);
+    }
+
+    public void OnClick_Back()
+    {
+        MainManager.Instance.RoomSelectBack();
+    }
 }

@@ -16,6 +16,7 @@ public class Mobile_Main_RoomSelect_RoomItem : MonoBehaviour
 
     public void OnClick_RoomJoin()
     {
+        (UIManager.Instance.GetUI(UIState._Mobile_Main_RoomSelect) as Mobile_Main_RoomSelect).Loading.SetActive(true);
         MainManager.Instance.JoinRoom(m_roomName);
     }
 }

@@ -15,7 +15,7 @@ public class Mobile_MultiGame_Result : UIBase
     {
         base.ShowUI();
 
-        myScoreText.text = string.Concat("Score: " + InGameManager.Instance.score);
+        myScoreText.text = string.Concat("Score: " + Multi_InGameManager.Instance.score);
         GetScoreBtn();
     }
 
@@ -24,14 +24,9 @@ public class Mobile_MultiGame_Result : UIBase
         StartCoroutine(GetScores(GameManager.Instance.UserInfoData.selectedStage));
     }
 
-    public void OnClick_ReStart()
-    {
-        SceneLoader.Load("GameScene");
-    }
-
     public void OnClick_MainMenu()
     {
-        SceneLoader.Load("MainScene");
+        Multi_InGameManager.Instance.Result_MainMenu();
     }
 
     #region Coroutine
@@ -64,8 +59,7 @@ public class Mobile_MultiGame_Result : UIBase
                     int stageNumber = int.Parse(splitData[i]);
                     if (stageNumber != stage)
                         continue;
-                    if (GameManager.Instance.gamePlayType == GamePlayerType.Multi && splitData[i + 1] != "multi "
-                        || GameManager.Instance.gamePlayType == GamePlayerType.Solo && splitData[i + 1] != "solo ")
+                    if (splitData[i + 1] != "multi ")
                         continue;
 
                     Debug.LogError("Ranking Get : " + splitData[i + 1]);

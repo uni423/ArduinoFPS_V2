@@ -29,18 +29,18 @@ public class PC_MultiGame_Result : UIBase
 
     public void OnClick_SendScoreBtn()
     {
-        StartCoroutine(PostScores(myNameText.text, (int)InGameManager.Instance.score));
+        StartCoroutine(PostScores(myNameText.text, (int)Multi_InGameManager.Instance.score));
         nameInputObj.SetActive(false);
     }
 
     public void OnClick_ReStart()
     {
-        SceneLoader.Load("GameScene");
+        Multi_InGameManager.Instance.photonEvent.GameReStart();
     }
 
     public void OnClick_MainMenu()
     {
-        SceneLoader.Load("MainScene");
+        Multi_InGameManager.Instance.Result_MainMenu();
     }
 
     #region Coroutine
@@ -111,7 +111,7 @@ public class PC_MultiGame_Result : UIBase
         form.AddField("playerName", name);
         form.AddField("score", score);
         form.AddField("stage", GameManager.Instance.UserInfoData.selectedStage);
-        form.AddField("playType", "solo");
+        form.AddField("playType", "multi");
 
         UnityWebRequest www = UnityWebRequest.Post(addScoreURL, form);
 

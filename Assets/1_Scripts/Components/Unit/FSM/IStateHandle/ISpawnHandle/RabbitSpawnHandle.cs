@@ -9,13 +9,15 @@ public class RabbitSpawnHandle : StateHandle
     public override void OnEnter()
     {
         unitObject = parent.unitObject as RabbitUnitObject;
-        //Sound
-        unitObject.audioSource.clip = unitObject.spawnSFX[Random.Range(0, unitObject.spawnSFX.Length)];
-        unitObject.audioSource.Play();
-        //Effect
 
+        //Sound
+        unitObject.audioSource.clip = unitObject.sounds[(int)RabbitSoundType.Spawn].GetRandomAudio();
+        unitObject.audioSource.Play();
+
+        //Effect
         if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
             Multi_InGameManager.PHObjectPooling.PoolInstantiate("Effect/Rabbit_Spawn", unitObject.cachedTransform.position, Quaternion.identity);
+
         else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
             InGameManager.ObjectPooling.Spawn("Rabbit_Spawn", null, unitObject.cachedTransform.position);
     }

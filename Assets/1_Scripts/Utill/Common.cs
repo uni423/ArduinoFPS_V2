@@ -46,3 +46,10 @@ public enum GamePlayerType
     Solo, 
     Multi, 
 }
+
+public enum RabbitSoundType
+{
+    Spawn, 
+    Hit, 
+    Dead, 
+}

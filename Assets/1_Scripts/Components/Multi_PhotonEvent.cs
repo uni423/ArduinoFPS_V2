@@ -51,4 +51,18 @@ public class Multi_PhotonEvent : MonoBehaviourPun
             (UIManager.Instance.GetUI(UIState._Mobile_MultiGame_Ingame) as Mobile_MultiGame_Ingame).AddScoreUI(addScore, isCombo);
         }
     }
+
+    public void GameReStart()
+    {
+        if (photonView.IsMine)
+        {
+            photonView.RPC("Event_SceneLoad", RpcTarget.AllViaServer);
+        }
+    }
+
+    [PunRPC]
+    public void Event_GameReStart()
+    {
+        PhotonNetwork.LoadLevel("MultiGameScene");
+    }
 }

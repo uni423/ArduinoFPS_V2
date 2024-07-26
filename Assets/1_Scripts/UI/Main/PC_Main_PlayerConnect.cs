@@ -12,6 +12,8 @@ public class PC_Main_PlayerConnect : UIBase
 
     public GameObject Mobile_WaitStageSelect;
 
+    public GameObject BackButton;
+
     public override void Init()
     {
         base.Init();
@@ -20,6 +22,8 @@ public class PC_Main_PlayerConnect : UIBase
         Player1.SetActive(false);
         Player2.SetActive(false);
         Mobile_WaitStageSelect.SetActive(false);
+
+        BackButton.SetActive(GameManager.Instance.platform == PlatformType.Mobile);
     }
 
     public override void ShowUI()
@@ -56,6 +60,11 @@ public class PC_Main_PlayerConnect : UIBase
                     Mobile_WaitStageSelect.SetActive(true);
                 break;
         }
+    }
+
+    public void OnClick_Back()
+    {
+        MainManager.Instance.BackPlayerConnect();
     }
 
     public void OnClick_TestStart()
