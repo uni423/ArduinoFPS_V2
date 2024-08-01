@@ -79,7 +79,7 @@ public class Multi_InGameManager : MonoBehaviour
         IsPlaying = true;
         IsReSetting = false;
 
-        Instance.gameTime = 10;
+        Instance.gameTime = 100;
         //Instance.gameTime = 9999999;
     }
 

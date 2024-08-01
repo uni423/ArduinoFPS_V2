@@ -48,9 +48,15 @@ public class PlayerControl : MonoBehaviour
 
         isUsePump = !GameManager.Instance.bluetoothManager.IsConnected;
         if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+        {
             multiIngameUI = (UIManager.Instance.GetUI(UIState._Mobile_MultiGame_Ingame) as Mobile_MultiGame_Ingame);
+            multiIngameUI.pump.gameObject.SetActive(isUsePump);
+        }
         else if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+        {
             ingameUI = (UIManager.Instance.GetUI(UIState._SoloGame_Ingame) as IngameUI);
+            ingameUI.pump.gameObject.SetActive(isUsePump);
+        }
     }
 
     void Update()
@@ -148,7 +154,7 @@ public class PlayerControl : MonoBehaviour
     private bool isReload;
     public void Buletooth(string command)
     {
-        Debug.Log("Buletooth" + command);
+        Debug.LogError("Buletooth" + command);
         switch (command)
         {
             case "trigger On":

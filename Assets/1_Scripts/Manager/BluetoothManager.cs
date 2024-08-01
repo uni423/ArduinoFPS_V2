@@ -51,8 +51,16 @@ public class BluetoothManager : MonoBehaviour
                     dataRecived = datain;
                     //print(dataRecived);
                     Debug.LogError(dataRecived);
-                    if (InGameManager.Instance != null)
-                        InGameManager.Instance.playerControl.Buletooth(dataRecived);
+                    if (GameManager.Instance.gamePlayType == GamePlayerType.Solo)
+                    {
+                        if (InGameManager.Instance != null)
+                            InGameManager.Instance.playerControl.Buletooth(dataRecived);
+                    }
+                    else if (GameManager.Instance.gamePlayType == GamePlayerType.Multi)
+                    {
+                        if (Multi_InGameManager.Instance != null)
+                            Multi_InGameManager.Instance.playerControl.Buletooth(dataRecived);
+                    }
                 }
 
             }

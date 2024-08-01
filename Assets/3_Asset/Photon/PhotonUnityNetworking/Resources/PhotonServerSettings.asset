@@ -51,6 +51,7 @@ MonoBehaviour:
   - Event_AddScore
   - Event_SetCombo
   - Event_GameReStart
+  - Event_SetSelectStage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

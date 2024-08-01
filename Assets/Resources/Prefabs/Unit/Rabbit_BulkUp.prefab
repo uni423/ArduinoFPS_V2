@@ -428,6 +428,20 @@ MonoBehaviour:
   model: {fileID: 8253280764414465242}
   curState: 0
   audioSource: {fileID: 3128193666962417430}
+  sounds:
+  - type: 0
+    clipList:
+    - {fileID: 8300000, guid: 0e1410b5a20a24543bcbde93ecbd2bcb, type: 3}
+    - {fileID: 8300000, guid: 42ae82766ed33a642bd0fa63cfe4cdad, type: 3}
+  - type: 1
+    clipList:
+    - {fileID: 8300000, guid: 9dcdd2bab687b4c459f6d5de86e9a90a, type: 3}
+    - {fileID: 8300000, guid: 19ce5ff53e4af4c45918ef1b43083c1e, type: 3}
+    - {fileID: 8300000, guid: 656fbbbed883d714db87970720d9eb44, type: 3}
+  - type: 2
+    clipList:
+    - {fileID: 8300000, guid: 6c2dad2ca9902fa40a2a5122c1ece9c5, type: 3}
+    - {fileID: 8300000, guid: 732edc3428da055458fb9b61f6e1ae53, type: 3}
   spawnSFX:
   - {fileID: 8300000, guid: 0e1410b5a20a24543bcbde93ecbd2bcb, type: 3}
   - {fileID: 8300000, guid: 42ae82766ed33a642bd0fa63cfe4cdad, type: 3}
